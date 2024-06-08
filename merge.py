@@ -1,3 +1,4 @@
+"""Merge all datasets, include third party HERIDAL"""
 import argparse
 import os
 import hashlib

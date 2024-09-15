@@ -116,7 +116,7 @@ In addition, we use three schemes to assess the impact of sliding window sizes:
 
 # Results
 
-A machine with the following characteristics was used for experiments:
+A computer with the following characteristics was used for experiments:
 - CPU Ryzen 5 2700 RAM 32 GB;
 - GPU RTX3090 RAM 24 GB.
 - Ubuntu 24.04, python 3.9, ultralitics 8.2.28.
@@ -136,9 +136,9 @@ Yolo 8m  Precision / Recall, %
 
 | input size | No crops | Crops 2 x 1  | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
 |------------|----------|--------------|-------------|----------------|----------------|
-| 640        | 40 / 38  |              | 41 / 42     |                |                |   
+| 640        |          |              | 41 / 42     |                |                |   
 | 1280       |          |              | 46 / 50     |                |                |   
-| 1984       |          |              |             |                |                |   
+| 1984       | 40 / 38  |              |             |                |                |   
 
 
 Yolo 8x  Precision / Recall, % 
@@ -147,7 +147,7 @@ Yolo 8x  Precision / Recall, %
 |------------|----------|-------------|-------------|----------------|----------------|
 | 640        | 24 / 24  |             | 34 / 40     |                |                |   
 | 1280       | 33 / 29  |             |             |                |                |   
-| 1984       |          | 37 / 41     | 45 / 47     |                |                |   
+| 1984       | 35 / 42  | 37 / 41     | 45 / 47     |                |                |   
 
 # Discussion 
 

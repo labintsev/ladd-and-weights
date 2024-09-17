@@ -5,7 +5,7 @@ We introduce an tiny object detection dataset named Lacmus, aiming at specific t
 The images in the dataset were captured over grass and small trees areas of 5 different locations and 3 seasons. 
 Lacmus dataset has more than 5000 annotated instances in 1552 images with annotations, including Pedestrian bounding boxes. 
 For the real application, we are testing crop predictions and different input image sizes of yolo8. 
-We found, that the best ratio of accuracy and performance has medium model size with large input size without cropping, just scaling input image.   
+We found, that the best ratio of speed and accuracy has medium model size with large input size without cropping, just scaling input image.   
 We hope the dataset boost both the research and development, that helps to save the lives of missing people.
 
 # Introduction
@@ -143,7 +143,7 @@ We believe that Recall metric has a greater practical importance.
 As speed metric, we use the prediction time on the CPU and GPU in milliseconds. 
 Thanks to the creators of the ultralitics framework for implementing the functionality for measuring the performance of models.
 
-Yolov8 pretrained with COCO was used as models for our experiments. 
+Yolov8 [Redmon 2016] pretrained with COCO was used as models for our experiments. 
 We used three main models with different number of parameters: 
 - yolo v8 nano - 3.2 M parameters
 - yolo v8 medium - 25.9M parameters
@@ -167,20 +167,20 @@ Results are in the tables 1 - 3.
 
 Yolo 8n Precision / Recall, %
 
-| input size | No crops | Crops 2 x 1  | Crops 3 x 2 | CPU infer, ms | GPU infer, ms | 
-|------------|----------|--------------|-------------|---------------|---------------|
-| 640        | 20 / 23  |              | 26 / 40     |               |               |   
-| 1280       | 29 / 27  |              |             |               |               |   
-| 1984       | 36 / 35  |              | 45 / 49     |               |               |   
+| input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer, ms | GPU infer, ms | 
+|------------|----------|-------------|-------------|---------------|---------------|
+| 640        | 20 / 23  | 30 / 28     | 26 / 40     |               |               |   
+| 1280       | 29 / 27  |             |             |               |               |   
+| 1984       | 36 / 35  | 37 / 41     | 45 / 49     |               |               |   
 
 
 Yolo 8m  Precision / Recall, % 
 
-| input size | No crops | Crops 2 x 1  | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
-|------------|----------|--------------|-------------|----------------|----------------|
-| 640        |          |              | 41 / 42     |                |                |   
-| 1280       |          |              | 46 / 50     |                |                |   
-| 1984       | 40 / 41  |              |             |                |                |   
+| input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
+|------------|----------|-------------|-------------|----------------|----------------|
+| 640        | 27 / 28  | 30 / 32     | 41 / 42     |                |                |   
+| 1280       |          |             | 46 / 50     |                |                |   
+| 1984       | 40 / 41  | 45 / 42     |             |                |                |   
 
 
 Yolo 8x  Precision / Recall, % 
@@ -221,3 +221,4 @@ Based on this, the best model with the best number of sliding windows should be 
 - Akyon, F.C., Altinuc, S.O. and Temizel, A., 2022, October. Slicing aided hyper inference and fine-tuning for small object detection. In 2022 IEEE International Conference on Image Processing (ICIP) (pp. 966-970). IEEE.
 - Zhang, H., Hao, C., Song, W., Jiang, B. and Li, B., 2023. Adaptive slicing-aided hyper inference for small object detection in high-resolution remote sensing images. Remote Sensing, 15(5), p.1249.
 - Carranza-García, M., Torres-Mateo, J., Lara-Benítez, P. and García-Gutiérrez, J., 2020. On the performance of one-stage and two-stage object detectors in autonomous vehicles using camera data. Remote Sensing, 13(1), p.89.
+- Redmon, J., 2016. You only look once: Unified, real-time object detection. In Proceedings of the IEEE conference on computer vision and pattern recognition. 

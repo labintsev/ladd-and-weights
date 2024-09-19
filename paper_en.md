@@ -126,6 +126,8 @@ Box numbers distribution is on the picture.
 
 # Methods 
 
+## Data collection 
+
 There are five folds of images collected from different areas and seasons:
 - 0 : 410 winter Moscow 2019;
 - 411 : 768 summer Moscow 2019;
@@ -135,6 +137,8 @@ There are five folds of images collected from different areas and seasons:
 
 To avoid data liks, data from the four SARs 0 - 1421 used as a train subset. 
 Images from Nnovgorod SAR 1422 - 1551 used as a test subset. 
+
+## Training models
 
 We use precision and recall as performance metrics. 
 Precision reflects the magnitude of errors of the 1 type errors, or the proportion of objects mistaken for a person. 

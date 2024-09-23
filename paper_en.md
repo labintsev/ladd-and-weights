@@ -185,7 +185,7 @@ Yolo 8n Precision / Recall, %
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer, ms | GPU infer, ms | 
 |------------|----------|-------------|-------------|---------------|---------------|
 | 640        | 20 / 23  | 30 / 28     | 26 / 40     | 68            | 10            |   
-| 1280       | 29 / 27  |             | 43 / 42     | 253           | 13            |   
+| 1280       | 29 / 27  | 34 / 40     | 43 / 42     | 253           | 13            |   
 | 1984       | 36 / 35  | 37 / 41     | 45 / 49     | 704           | 20            |   
 
 
@@ -205,6 +205,12 @@ Yolo 8x  Precision / Recall, %
 | 640        | 24 / 24  | 32 / 29     | 34 / 40     | 1050         | 21             |   
 | 1280       | 33 / 29  |             |             | 4400         | 43             |   
 | 1984       | 43 / 35  | 37 / 41     | 45 / 47     | 10800        | 93             |   
+
+Comparison of Generalized (dfl)[Li 2020] loss dynamics for 1984 input models and original dataset is on the figure 7. 
+
+![Train and test generalized loss dynamics for the three models](doc/7.png) 
+
+Train and test generalized loss dynamics for the three models: a) nano, b) medium and c) xlarge yolos. 
 
 # Discussion 
 
@@ -237,3 +243,4 @@ Based on this, the best model with the best number of sliding windows should be 
 - Zhang, H., Hao, C., Song, W., Jiang, B. and Li, B., 2023. Adaptive slicing-aided hyper inference for small object detection in high-resolution remote sensing images. Remote Sensing, 15(5), p.1249.
 - Carranza-García, M., Torres-Mateo, J., Lara-Benítez, P. and García-Gutiérrez, J., 2020. On the performance of one-stage and two-stage object detectors in autonomous vehicles using camera data. Remote Sensing, 13(1), p.89.
 - Redmon, J., 2016. You only look once: Unified, real-time object detection. In Proceedings of the IEEE conference on computer vision and pattern recognition. 
+- Li, X., Wang, W., Wu, L., Chen, S., Hu, X., Li, J., Tang, J. and Yang, J., 2020. Generalized focal loss: Learning qualified and distributed bounding boxes for dense object detection. Advances in Neural Information Processing Systems, 33, pp.21002-21012.

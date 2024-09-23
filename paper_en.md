@@ -2,17 +2,16 @@
 
 ## Abstract
 We introduce an tiny object detection dataset named Lacmus, aiming at specific task - find missing people on the drone images. 
-The images in the dataset were captured over grass and small trees areas of 5 different locations and 3 seasons. 
 Lacmus dataset has more than 5000 annotated instances in 1552 images with annotations, including Pedestrian bounding boxes. 
+The images in the dataset were captured over grass and small trees areas of 5 different locations and 3 seasons. 
 For the real application, we are testing crop predictions and different input image sizes of yolo8. 
-We found, that the best ratio of speed and accuracy has medium model size with large input size without cropping, just scaling input image.   
-We hope the dataset boost both the research and development, that helps to save the lives of missing people.
+We found, that the best ratio of speed and accuracy has medium model size with large input size without cropping, just scaling input image. 
+We hope the dataset boost both the research and development, that helps to save the lives of missing people. 
 
 # Introduction
 Many people disappear in wilderness every year. 
 A significant part of them are people who have lost their way far from human habitation. 
 Fortunately, some of the lost are chosen by themselves, and volunteer search and rescue teams are mobilized to help others. 
-The main search methods today, are on foot combing the surroundings using technical means, which are often no more complicated than a siren or a buzzing beacon. 
 The topic is relevant and hot, generates many ideas for using in search of achievements of scientific and technological progress.  
 Some of them are even embodied in the form of prototypes and tested at specially organized competitions. 
 But in a forest the real conditions of the search coupled with limited material resources, make this problem difficult and still very far from a complete solution. 
@@ -20,7 +19,7 @@ In recent years, rescuers have increasingly used unmanned aerial vehicles (UAVs)
 From one search and rescue operation, several thousand photos are obtained, which today the volunteers look at manually. 
 It is clear that such processing is long and inefficient. 
 After two hours of such work, the volunteers get tired and cannot continue the search, but people's health and lives depend on its speed. 
-Together with search and rescue teams, we are developing an application to search for missing people in images taken from UAVs.  
+Lacmus foundation with search and rescue teams develope an application to search for missing people in images taken from UAVs.  
 
 ## Related works
 
@@ -31,11 +30,6 @@ Historically, it is considered to be two types of detectors - one stage and two 
 One-stage detectors are used more often today due to the good ratio of accuracy and speed [Carranza-García 2020]. 
 Nowadays, computationally more complex architectures based on transformers are known [Shehzadi 2023]. 
 But heavy computing makes it difficult to use such architectures in real-world applications.  
-
-Another very effective technique for improving prediction accuracy is the Slicing Aided Hyper Inference (SAHI) window method [Akyon 2022]. 
-However, to pay for increased accuracy is increased computational costs, especially for processing high-resolution images. 
-An adaptive method is also known to reduce unnecessary calculations [Zhang 2023].  
-However, the question of choosing the optimal window size and model for detection is still open.  
 
 The most popular benchmarks for comparing different object detection architectures are COCO [Lin 2014] and Pascal Voc [Everingham 2010].  
 These datasets have a large number of marked-up images, unfortunately, not relevant to our special task. 
@@ -68,7 +62,7 @@ It includes 42,825 frames, extracted from 5.4k resolution videos, and manually a
 This allows computer vision models to be evaluated on their detection performance across different ranges of occlusion. 
 NOMAD is designed to improve the effectiveness of aerial search and rescue and to enhance collaboration between sUAS and humans, by providing a new benchmark dataset for human detection under occluded aerial views.
 
-In SAR operations, the objects detecting task has the following features [Du 2018]: 
+Thus, the objects detecting task in SAR operations has the following features [Du 2018]: 
 - **Objects are only one class**. 
 As a rule, people are of the greatest interest in the search. 
 Other classes of objects may also be present, but their detection is rather an exception to the rule. 
@@ -88,6 +82,12 @@ This means that the detection model must have a sufficiently high generalizing a
 A large amount of information requires a lot of processing costs. 
 Powerful computers with modern video cards are not always available to rescue teams.  
 
+Improving prediction accuracy for small objects is hot topic.  
+Very effective technique for this task is the Slicing Aided Hyper Inference (SAHI) window method [Akyon 2022]. 
+However, to pay for increased accuracy is increased computational costs, especially for processing high-resolution images. 
+An adaptive method is also known to reduce unnecessary calculations [Zhang 2023].  
+However, the question of choosing the optimal window size and model for detection is still open.  
+The problem is well known as a speed accuracy trade-off. 
 Therefore, the more effectively the detection algorithm works, the less time it will take to find a missing person and rescue him. 
 The Lacmus Foundation team is developing applications for rescue teams that work on stationary and mobile platforms. 
 The aim of our research is to find the best balance between speed and accuracy of prediction. 
@@ -95,13 +95,12 @@ This issue is very important, because our applications are already successfully 
 
 ## Dataset description 
 
-Training search and rescue operations were conducted to collect data. 
+TTo collect necessary data we organized training search and rescue operations. 
 A team of volunteers traveled to the area and were there in various poses. 
 These poses corresponded to how the real missing people were found. 
 We used clothes of different colors, as well as terrain with different numbers of trees: 
 - a clear field;
-- a rare forest;
-- a sparse forest.
+- a rare forest.
 
 In total, 5 training sessions were conducted at 3 different seasons: spring, summer and winter. 
 
@@ -113,13 +112,14 @@ Image with object example is on the picture.
 ![Scaled example](doc/4.png)
 
 Most of the images have resolution (4000,3000) and more. 
-Some have less height about 2250 or 2280 px.
+Some have less height about 2250 px.
 Image size distribution is on the picture. 
 
 ![Image size distribution](doc/1.png)
 
 Most images have from 2 to 4 boxes. 
-But some images has about 100 objects, and 57 only background. 
+But some images has about 100 objects. 
+Also, dataset has 57 images without people, only background.  
 Box numbers distribution is on the picture. 
 
 ![Box numbers distribution](doc/2.png)
@@ -137,6 +137,14 @@ There are five folds of images collected from different areas and seasons:
 
 To avoid data liks, data from the four SARs 0 - 1421 used as a train subset. 
 Images from Nnovgorod SAR 1422 - 1551 used as a test subset. 
+
+To study the ratio of speed and accuracy, we created two additional datasets by dividing the original images into several parts: 
+Crop 2x1 - split images into 2 parts by width. This gave us 2,844 images for training and 260 for testing. 
+Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 5,688 images for training and 520 for testing. 
+Thus, we have three different versions of the same data at our disposal. 
+This is necessary in order to assess the loss of detection accuracy at different levels of image resolution compression. 
+The maximum compression will be when the original image is compressed to the size of a 640 by 640 model. 
+The minimum compression losses will be in the 3x2 dataset and the input size of the 1984 to 1984 model.
 
 ## Training models
 

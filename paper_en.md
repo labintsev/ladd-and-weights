@@ -34,7 +34,6 @@ But heavy computing makes it difficult to use such architectures in real-world a
 The most popular benchmarks for comparing different object detection architectures are COCO [Lin 2014] and Pascal Voc [Everingham 2010].  
 These datasets have a large number of marked-up images, unfortunately, not relevant to our special task. 
 The VisDrone dataset [Zhu, 2018] is currently widely used for evaluating unmanned aerial vehicle (UAV) object detection. 
-It was curated and created by the Machine Learning and Data Mining Laboratory team at Tianjin University. 
 The dataset comprises 10,209 images, with 6471 images allocated for training, 548 images for validation, and 3190 images for testing. 
 It encompasses a total of 10 object categories, namely, pedestrian, people, bicycle, car, van, truck, tricycle, awning-tricycle, bus, and motorbike. 
 Most images made in city landscape, but this is not relevant context for the forest rescue operations. 
@@ -141,6 +140,10 @@ Images from Nnovgorod SAR 1422 - 1551 used as a test subset.
 To study the ratio of speed and accuracy, we created two additional datasets by dividing the original images into several parts: 
 Crop 2x1 - split images into 2 parts by width. This gave us 2,844 images for training and 260 for testing. 
 Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 5,688 images for training and 520 for testing. 
+Cropping scheme is on the image.  
+
+![Cropping scheme](doc/6.png) 
+
 Thus, we have three different versions of the same data at our disposal. 
 This is necessary in order to assess the loss of detection accuracy at different levels of image resolution compression. 
 The maximum compression will be when the original image is compressed to the size of a 640 by 640 model. 

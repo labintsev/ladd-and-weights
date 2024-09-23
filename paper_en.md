@@ -138,7 +138,7 @@ To avoid data liks, data from the four SARs 0 - 1421 used as a train subset.
 Images from Nnovgorod SAR 1422 - 1551 used as a test subset. 
 
 To study the ratio of speed and accuracy, we created two additional datasets by dividing the original images into several parts: 
-Crop 2x1 - split images into 2 parts by width. This gave us 2,844 images for training and 260 for testing. 
+Crop 2x1 - split images into 2 parts by width. This gave us 1804 images for training and 147 for testing. 
 Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 5,688 images for training and 520 for testing. 
 Cropping scheme is on the image.  
 
@@ -184,27 +184,27 @@ Yolo 8n Precision / Recall, %
 
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer, ms | GPU infer, ms | 
 |------------|----------|-------------|-------------|---------------|---------------|
-| 640        | 20 / 23  | 30 / 28     | 26 / 40     |               | 10            |   
-| 1280       | 29 / 27  |             |             |               | 12            |   
-| 1984       | 36 / 35  | 37 / 41     | 45 / 49     |               | 20            |   
+| 640        | 20 / 23  | 30 / 28     | 26 / 40     | 68            | 10            |   
+| 1280       | 29 / 27  |             | 43 / 42     | 253           | 13            |   
+| 1984       | 36 / 35  | 37 / 41     | 45 / 49     | 704           | 20            |   
 
 
 Yolo 8m  Precision / Recall, % 
 
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
 |------------|----------|-------------|-------------|----------------|----------------|
-| 640        | 27 / 28  | 30 / 32     | 41 / 42     |                | 18             |   
-| 1280       |          |             | 46 / 50     |                | 23             |   
-| 1984       | 40 / 41  | 45 / 42     | 50 / 50     |                | 44             |   
+| 640        | 27 / 28  | 30 / 32     | 41 / 42     | 360            | 18             |   
+| 1280       |          |             | 46 / 50     | 1500           | 23             |   
+| 1984       | 40 / 41  | 45 / 42     | 50 / 50     | 3600           | 44             |   
 
 
 Yolo 8x  Precision / Recall, % 
 
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU onnx, ms | GPU infer,  ms | 
 |------------|----------|-------------|-------------|--------------|----------------|
-| 640        | 24 / 24  | 32 / 29     | 34 / 40     | 1068         | 21             |   
-| 1280       | 33 / 29  |             |             |              | 43             |   
-| 1984       | 43 / 35  | 37 / 41     | 45 / 47     |              | 93             |   
+| 640        | 24 / 24  | 32 / 29     | 34 / 40     | 1050         | 21             |   
+| 1280       | 33 / 29  |             |             | 4400         | 43             |   
+| 1984       | 43 / 35  | 37 / 41     | 45 / 47     | 10800        | 93             |   
 
 # Discussion 
 

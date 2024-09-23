@@ -139,7 +139,7 @@ Images from Nnovgorod SAR 1422 - 1551 used as a test subset.
 
 To study the ratio of speed and accuracy, we created two additional datasets by dividing the original images into several parts: 
 Crop 2x1 - split images into 2 parts by width. This gave us 1804 images for training and 147 for testing. 
-Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 5,688 images for training and 520 for testing. 
+Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 2368 images for training and 192 for testing. 
 Cropping scheme is on the image.  
 
 ![Cropping scheme](doc/6.png) 

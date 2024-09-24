@@ -2,9 +2,8 @@
 
 ## Abstract
 We introduce an tiny object detection dataset named Lacmus, aiming at specific task - find missing people on the drone images. 
-Lacmus dataset has more than 5000 annotated instances in 1552 images with annotations, including Pedestrian bounding boxes. 
-The images in the dataset were captured over grass and small trees areas of 5 different locations and 3 seasons. 
-For the real application, we are testing crop predictions and different input image sizes of yolo8. 
+Lacmus dataset has more than 5000 annotated instances in 1552 images captured pedestrians over grass and small trees areas of 5 different locations and 3 seasons. 
+For the real application, we are testing crop predictions and different input image sizes of yolo8 model. 
 We found, that the best ratio of speed and accuracy has medium model size with large input size without cropping, just scaling input image. 
 We hope the dataset boost both the research and development, that helps to save the lives of missing people. 
 
@@ -156,7 +155,11 @@ Precision reflects the magnitude of errors of the 1 type errors, or the proporti
 Recall reflects the magnitude of errors of the second kind, or the proportion of objects (people) that the algorithm could not detect. 
 We believe that Recall metric has a greater practical importance. 
 As speed metric, we use the prediction time on the CPU and GPU in milliseconds. 
-Thanks to the creators of the ultralitics framework for implementing the functionality for measuring the performance of models.
+Thanks to the creators of the ultralitics framework for implementing the functionality for measuring the performance of models.  
+
+Yolo 8 architecture is on the figure  
+
+![Yolo 8 architecture](doc/5.png) 
 
 Yolov8 [Redmon 2016] pretrained with COCO was used as models for our experiments. 
 We used three main models with different number of parameters: 

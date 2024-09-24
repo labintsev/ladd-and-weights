@@ -181,6 +181,9 @@ A computer with the following characteristics was used for experiments:
 - GPU RTX3090 RAM 24 GB.
 - Ubuntu 24.04, python 3.9, ultralitics 8.2.28.
 
+GPU inference does not include any optimization, used auto batch size. 
+Delay include inference and postprocessing, preprocessing time is ignored. 
+
 Results are in the tables 1 - 3.  
 
 Yolo 8n Precision / Recall, %
@@ -197,7 +200,7 @@ Yolo 8m  Precision / Recall, %
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
 |------------|----------|-------------|-------------|----------------|----------------|
 | 640        | 27 / 28  | 30 / 32     | 41 / 42     | 360            | 18             |   
-| 1280       |          |             | 46 / 50     | 1500           | 23             |   
+| 1280       | 34 / 35  | 38 / 37     | 46 / 50     | 1500           | 23             |   
 | 1984       | 40 / 41  | 45 / 42     | 50 / 50     | 3600           | 44             |   
 
 
@@ -206,20 +209,25 @@ Yolo 8x  Precision / Recall, %
 | input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU onnx, ms | GPU infer,  ms | 
 |------------|----------|-------------|-------------|--------------|----------------|
 | 640        | 24 / 24  | 32 / 29     | 34 / 40     | 1050         | 21             |   
-| 1280       | 33 / 29  |             |             | 4400         | 43             |   
+| 1280       | 33 / 29  | 35 / 35     | 44 / 38     | 4400         | 37             |   
 | 1984       | 43 / 35  | 37 / 41     | 45 / 47     | 10800        | 93             |   
 
 Comparison of Generalized (dfl)[Li 2020] loss dynamics for 1984 input models and original dataset is on the figure 7. 
 
 ![Train and test generalized loss dynamics for the three models](doc/7.png) 
 
-Train and test generalized loss dynamics for the three models: a) nano, b) medium and c) xlarge yolos. 
+Train and test generalized loss dynamics for the three yolo 8 models: a) nano, b) medium and c) xlarge. 
 
 # Discussion 
 
-The most accurate model is -  
-The fastest model is  
-When processing images on the GPU, it will be most effective to use image patches to maximize GPU memory usage.  
+The most accurate model is yolo 8m with 1980 px input size and 3x2 cropped dataset. 
+It strange, that more complex yolo 8x has worse result. 
+The most probably reason is small batch size - just 2 images. 
+Optimizing of training parameters is difficult and result is so pure. 
+We need an enterprise GPU with 80 GB of memory to test this hypothesis. 
+The fastest model is yolo 8m with 640 px input image size. 
+
+When processing images on the GPU, it will be most effective to batch image patches processing, according to maximum GPU available memory.  
 For these purposes, the most preferred scheme is -  
 When working on the CPU, the most preferred scheme is -  
 Thus, in real applications, it is necessary to take into account which processor will be used by the user.  

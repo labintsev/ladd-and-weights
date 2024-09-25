@@ -91,16 +91,24 @@ The Lacmus Foundation team is developing applications for rescue teams that work
 The aim of our research is to find the best balance between speed and accuracy of prediction. 
 This issue is very important, because our applications are already successfully used in real rescue operations. 
 
+## Methods 
+
 ## Dataset description 
 
-TTo collect necessary data we organized training search and rescue operations. 
+To collect necessary data we organized training search and rescue operations. 
 A team of volunteers traveled to the area and were there in various poses. 
 These poses corresponded to how the real missing people were found. 
+
 We used clothes of different colors, as well as terrain with different numbers of trees: 
 - a clear field;
 - a rare forest.
 
-In total, 5 training sessions were conducted at 3 different seasons: spring, summer and winter. 
+In total, 5 training sessions were conducted at 3 different seasons and locations: 
+- 0 : 410 winter Moscow 2019;
+- 411 : 768 summer Moscow 2019;
+- 769 : 1036 spring Korolev 2019;
+- 1037 : 1421 summer Tambov 2019;
+- 1422 : 1551 summer Nnovgorod 2021.
 
 Dataset has 1552 images with more than 5000 annotated objects.  
 Image with object example is on the picture. 
@@ -122,23 +130,14 @@ Box numbers distribution is on the picture.
 
 ![Box numbers distribution](doc/2.png)
 
-# Methods 
-
-## Data collection 
-
-There are five folds of images collected from different areas and seasons:
-- 0 : 410 winter Moscow 2019;
-- 411 : 768 summer Moscow 2019;
-- 769 : 1036 spring Korolev 2019;
-- 1037 : 1421 summer Tambov 2019;
-- 1422 : 1551 summer Nnovgorod 2021. 
-
+There are five folds of images collected from different areas and seasons. 
 To avoid data liks, data from the four SARs 0 - 1421 used as a train subset. 
 Images from Nnovgorod SAR 1422 - 1551 used as a test subset. 
 
 To study the ratio of speed and accuracy, we created two additional datasets by dividing the original images into several parts: 
 Crop 2x1 - split images into 2 parts by width. This gave us 1804 images for training and 147 for testing. 
 Crop 3x2 is divided images into 6 parts - 3 in width and 2 in height. This gave us 2368 images for training and 192 for testing. 
+
 Cropping scheme is on the image.  
 
 ![Cropping scheme](doc/6.png) 
@@ -148,7 +147,7 @@ This is necessary in order to assess the loss of detection accuracy at different
 The maximum compression will be when the original image is compressed to the size of a 640 by 640 model. 
 The minimum compression losses will be in the 3x2 dataset and the input size of the 1984 to 1984 model.
 
-## Training models
+### Training models
 
 We use precision and recall as performance metrics. 
 Precision reflects the magnitude of errors of the 1 type errors, or the proportion of objects mistaken for a person. 
@@ -174,7 +173,7 @@ In addition, we use three schemes to assess the impact of sliding window sizes:
 - splitting the original image into two parts (2 x 1) and scale each crop to the input size of the model;
 - splitting the original image into six parts (3 x 2) and scale each crop to the input size of the model.  
 
-# Results
+## Results
 
 A computer with the following characteristics was used for experiments:
 - CPU Ryzen 5 2700 RAM 32 GB;
@@ -183,34 +182,35 @@ A computer with the following characteristics was used for experiments:
 
 GPU inference does not include any optimization, used auto batch size. 
 Delay include inference and postprocessing, preprocessing time is ignored. 
+CPU inference was optimized with onnx python module. 
 
 Results are in the tables 1 - 3.  
 
 Yolo 8n Precision / Recall, %
 
-| input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer, ms | GPU infer, ms | 
-|------------|----------|-------------|-------------|---------------|---------------|
-| 640        | 20 / 23  | 30 / 28     | 26 / 40     | 68            | 10            |   
-| 1280       | 29 / 27  | 34 / 40     | 43 / 42     | 253           | 13            |   
-| 1984       | 36 / 35  | 37 / 41     | 45 / 49     | 704           | 20            |   
+| input size | No crops | Crops 2x1 | Crops 3x2 | CPU infer, ms | GPU infer, ms | 
+|------------|----------|-----------|-----------|---------------|---------------|
+| 640        | 20 / 23  | 30 / 28   | 26 / 40   | 68            | 10            |   
+| 1280       | 29 / 27  | 34 / 40   | 43 / 42   | 250           | 13            |   
+| 1984       | 36 / 35  | 37 / 41   | 45 / 49   | 700           | 20            |   
 
 
 Yolo 8m  Precision / Recall, % 
 
-| input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU infer,  ms | GPU infer,  ms | 
-|------------|----------|-------------|-------------|----------------|----------------|
-| 640        | 27 / 28  | 30 / 32     | 41 / 42     | 360            | 18             |   
-| 1280       | 34 / 35  | 38 / 37     | 46 / 50     | 1500           | 23             |   
-| 1984       | 40 / 41  | 45 / 42     | 50 / 50     | 3600           | 44             |   
+| input size | No crops | Crops 2x1 | Crops 3x2 | CPU infer,  ms | GPU infer, ms | 
+|------------|----------|-----------|-----------|----------------|---------------|
+| 640        | 27 / 28  | 30 / 32   | 41 / 42   | 360            | 18            |   
+| 1280       | 34 / 35  | 38 / 37   | 46 / 50   | 1500           | 23            |   
+| 1984       | 40 / 41  | 45 / 42   | 50 / 50   | 3600           | 44            |   
 
 
 Yolo 8x  Precision / Recall, % 
 
-| input size | No crops | Crops 2 x 1 | Crops 3 x 2 | CPU onnx, ms | GPU infer,  ms | 
-|------------|----------|-------------|-------------|--------------|----------------|
-| 640        | 24 / 24  | 32 / 29     | 34 / 40     | 1050         | 21             |   
-| 1280       | 33 / 29  | 35 / 35     | 44 / 38     | 4400         | 37             |   
-| 1984       | 43 / 35  | 37 / 41     | 45 / 47     | 10800        | 93             |   
+| input size | No crops | Crops 2x1 | Crops 3x2 | CPU infer, ms | GPU infer, ms | 
+|------------|----------|-----------|-----------|---------------|---------------|
+| 640        | 24 / 24  | 32 / 29   | 34 / 40   | 1050          | 21            |   
+| 1280       | 33 / 29  | 35 / 35   | 44 / 38   | 4400          | 37            |   
+| 1984       | 43 / 35  | 37 / 41   | 45 / 47   | 10800         | 93            |   
 
 Comparison of Generalized (dfl)[Li 2020] loss dynamics for 1984 input models and original dataset is on the figure 7. 
 
@@ -218,7 +218,7 @@ Comparison of Generalized (dfl)[Li 2020] loss dynamics for 1984 input models and
 
 Train and test generalized loss dynamics for the three yolo 8 models: a) nano, b) medium and c) xlarge. 
 
-# Discussion 
+## Discussion 
 
 The most accurate model is yolo 8m with 1980 px input size and 3x2 cropped dataset. 
 It strange, that more complex yolo 8x has worse result. 
@@ -233,8 +233,10 @@ When working on the CPU, the most preferred scheme is -
 Thus, in real applications, it is necessary to take into account which processor will be used by the user.  
 Based on this, the best model with the best number of sliding windows should be used. 
 
+## Conclusion
+Thats all
 
-# References
+## References
 
 - Zhu, P., Wen, L., Du, D., Bian, X., Ling, H., Hu, Q., Nie, Q., Cheng, H., Liu, C., Liu, X. and Ma, W., 2018. Visdrone-det2018: The vision meets drone object detection in image challenge results. In Proceedings of the European Conference on Computer Vision (ECCV) Workshops (pp. 0-0).
 - Du, D., Qi, Y., Yu, H., Yang, Y., Duan, K., Li, G., Zhang, W., Huang, Q. and Tian, Q., 2018. The unmanned aerial vehicle benchmark: Object detection and tracking. In Proceedings of the European conference on computer vision (ECCV) (pp. 370-386).
@@ -255,3 +257,5 @@ Based on this, the best model with the best number of sliding windows should be 
 - Carranza-García, M., Torres-Mateo, J., Lara-Benítez, P. and García-Gutiérrez, J., 2020. On the performance of one-stage and two-stage object detectors in autonomous vehicles using camera data. Remote Sensing, 13(1), p.89.
 - Redmon, J., 2016. You only look once: Unified, real-time object detection. In Proceedings of the IEEE conference on computer vision and pattern recognition. 
 - Li, X., Wang, W., Wu, L., Chen, S., Hu, X., Li, J., Tang, J. and Yang, J., 2020. Generalized focal loss: Learning qualified and distributed bounding boxes for dense object detection. Advances in Neural Information Processing Systems, 33, pp.21002-21012.
+- Hosang J., Benenson R., Schiele B. Learning non-maximum suppression //Proceedings of the IEEE conference on computer vision and pattern recognition. – 2017. – С. 4507-4515.
+  

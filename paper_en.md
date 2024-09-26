@@ -123,9 +123,8 @@ Image size distribution is on the picture.
 
 ![Image size distribution](doc/1.png)
 
-Most images have from 2 to 4 boxes. 
-But some images has about 100 objects. 
-Also, dataset has 57 images without people, only background.  
+Most images have from 2 to 4 boxes, but some has about 100 objects. 
+Also, dataset has 57 images without people, only background. 
 Box numbers distribution is on the picture. 
 
 ![Box numbers distribution](doc/2.png)
@@ -142,31 +141,55 @@ Cropping scheme is on the image.
 
 ![Cropping scheme](doc/6.png) 
 
-Thus, we have three different versions of the same data at our disposal. 
-This is necessary in order to assess the loss of detection accuracy at different levels of image resolution compression. 
+Crops without objects was exluded from datasets. 
+Thus, we have three different versions of the same data. 
+This is necessary to estimate detection accuracy at different object/canvas square ratios (1:1200, 1:600 и 1:200). 
 The maximum compression will be when the original image is compressed to the size of a 640 by 640 model. 
-The minimum compression losses will be in the 3x2 dataset and the input size of the 1984 to 1984 model.
+The minimum compression will be in the 3x2 dataset and the input size of the 1984 to 1984 model.
 
 ### Training models
 
+A box is considered an object if the probability of classification is higher than the specified threshold. 
+An object is considered to be found correctly if the IoU value exceeds the specified threshold. 
+
+$$
+\displaystyle IoU = \frac{B_t \cap B_p}{B_t \cup B_p}
+$$
+
 We use precision and recall as performance metrics. 
+
+$$
+\displaystyle Precision = \frac{TP}{TP + FP}
+$$
+
 Precision reflects the magnitude of errors of the 1 type errors, or the proportion of objects mistaken for a person. 
+
+$$
+\displaystyle Recall = \frac{TP}{TP + FN}
+$$
+
 Recall reflects the magnitude of errors of the second kind, or the proportion of objects (people) that the algorithm could not detect. 
 We believe that Recall metric has a greater practical importance. 
-As speed metric, we use the prediction time on the CPU and GPU in milliseconds. 
+The operator can see a large number of false detector alarms and simply skip them. 
+However, if the detector misses a person, the operator probably won't see him either. 
+
+As a speed metric used the prediction time on the CPU and GPU in milliseconds. 
 Thanks to the creators of the ultralitics framework for implementing the functionality for measuring the performance of models.  
 
-Yolo 8 architecture is on the figure  
+Yolov8 [Redmon 2016]  was used as models for our experiments. 
+The simplified architecture of the neural network is shown in the figure 
 
 ![Yolo 8 architecture](doc/5.png) 
 
-Yolov8 [Redmon 2016] pretrained with COCO was used as models for our experiments. 
-We used three main models with different number of parameters: 
-- yolo v8 nano - 3.2 M parameters
-- yolo v8 medium - 25.9M parameters
-- yolo v8 xlarge - 68.2M parameters
+The key features of this model are SPPF (Spatial Pyramid Pooling Fast) and C2F (Cross stage partial).
 
-For each of the three models, we use three input image sizes: 640, 1280 and 1984 pixels. 
+Yolov8 pretrained with COCO was used as models for our experiments. 
+We used three main models with different number of parameters: 
+- yolo v8 nano - 225 layers, 1024 conv filters, 3.2 M parameters
+- yolo v8 medium - 295 layers, 768 conv filters, 25.9M parameters
+- yolo v8 xlarge - 365 layers, 512 conv filters, 68.2M parameters
+
+For each of the three models used three input image sizes: 640, 1280 and 1984 pixels. 
 
 In addition, we use three schemes to assess the impact of sliding window sizes:
 - no crops, the original image scales to the input size of the model;
@@ -258,4 +281,4 @@ Thats all
 - Redmon, J., 2016. You only look once: Unified, real-time object detection. In Proceedings of the IEEE conference on computer vision and pattern recognition. 
 - Li, X., Wang, W., Wu, L., Chen, S., Hu, X., Li, J., Tang, J. and Yang, J., 2020. Generalized focal loss: Learning qualified and distributed bounding boxes for dense object detection. Advances in Neural Information Processing Systems, 33, pp.21002-21012.
 - Hosang J., Benenson R., Schiele B. Learning non-maximum suppression //Proceedings of the IEEE conference on computer vision and pattern recognition. – 2017. – С. 4507-4515.
-  
+- YOLOv8. 2024. Object detection. Retrieved from https://github.com/ultralytics.

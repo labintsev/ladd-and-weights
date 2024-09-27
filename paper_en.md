@@ -243,21 +243,29 @@ Train and test generalized loss dynamics for the three yolo 8 models: a) nano, b
 
 ## Discussion 
 
-The most accurate model is yolo 8m with 1980 px input size and 3x2 cropped dataset. 
-It strange, that more complex yolo 8x has worse result. 
+The most accurate model is yolo 8m with 1984 px input size and 3x2 cropped dataset. 
+It`s unexpected, that more complex yolo 8x has worse result. 
 The most probably reason is small batch size - just 2 images. 
 Optimizing of training parameters is difficult and result is so pure. 
 We need an enterprise GPU with 80 GB of memory to test this hypothesis. 
-The fastest model is yolo 8m with 640 px input image size. 
+Also we need more data to collect, that help to avoid complex models overfitting.  
 
+The fastest model is yolo 8m with 640 px input image size. 
+We can split the input image into just two crops and compress it to a size of 1280 pixels. 
+In this case, an average accuracy of 38% in just 0.5 seconds on the CPU.  
+However, when working on the CPU, splitting the source image into tiles and combining them into a batch does not give an advantage in processing speed, unlike the GPU.
 When processing images on the GPU, it will be most effective to batch image patches processing, according to maximum GPU available memory.  
-For these purposes, the most preferred scheme is -  
-When working on the CPU, the most preferred scheme is -  
+If the user has a GPU, we can use the yolo8m model with input 1984, crop the images to achieve better precision and recall at the level of 50%.  
+
 Thus, in real applications, it is necessary to take into account which processor will be used by the user.  
 Based on this, the best model with the best number of sliding windows should be used. 
 
 ## Conclusion
-Thats all
+The article examines the Lacmus dataset collected by volunteers. 
+The characteristics of the data are closest to those images that search teams receive during real SAR operations.  
+In addition, an experiment was conducted with various one-stage detection models yolo8, with the different crops of original images. 
+The results obtained make it possible to achieve an optimal balance of speed and accuracy on various computing devices. 
+Further research is aimed at training transformer architectures and comparing them with convolutional neural networks.
 
 ## References
 

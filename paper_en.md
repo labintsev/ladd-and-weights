@@ -125,9 +125,12 @@ Image size distribution is on the picture.
 
 Most images have from 2 to 4 boxes, but some has about 100 objects. 
 Also, dataset has 57 images without people, only background. 
-Box numbers distribution is on the picture. 
+Box numbers distribution is on the figure. 
 
 ![Box numbers distribution](doc/2.png)
+
+Boxes square distribution is on the figure. 
+![Objects square distribution](doc/8.png)
 
 There are five folds of images collected from different areas and seasons. 
 To avoid data liks, data from the four SARs 0 - 1421 used as a train subset. 
@@ -143,7 +146,7 @@ Cropping scheme is on the image.
 
 Crops without objects was exluded from datasets. 
 Thus, we have three different versions of the same data. 
-This is necessary to estimate detection accuracy at different object/canvas square ratios (1:1200, 1:600 и 1:200). 
+This is necessary to estimate detection accuracy at different object/canvas square ratios (1:2400, 1:1200 и 1:400). 
 The maximum compression will be when the original image is compressed to the size of a 640 by 640 model. 
 The minimum compression will be in the 3x2 dataset and the input size of the 1984 to 1984 model.
 

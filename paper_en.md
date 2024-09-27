@@ -204,7 +204,7 @@ A computer with the following characteristics was used for experiments:
 - Ubuntu 24.04, python 3.9, ultralitics 8.2.28.
 
 GPU inference does not include any optimization, used auto batch size. 
-Delay include inference and postprocessing, preprocessing time is ignored. 
+Delay include inference and postprocessing NMS [Hosang 2017], preprocessing time is ignored. 
 CPU inference was optimized with onnx python module. 
 
 Results are in the tables 1 - 3.  
